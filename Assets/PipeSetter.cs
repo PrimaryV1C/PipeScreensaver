@@ -1,11 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class PipeSetter : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject pipePrefab;
+    public int totalPipeSegments;
+    public Color[] pipeColors;
+    private Color currentColor;
+    Vector3 startPosition = Vector3.zero;
+    Vector3 direction = Vector3.up;
+    Quaternion rotation = Quaternion.identity;
+
+
+    private void Start()
     {
         
     }
