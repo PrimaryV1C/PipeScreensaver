@@ -21,5 +21,13 @@ public class PipeSetter : MonoBehaviour
     void Update()
     {
         
+    private void GeneratePipe()
+    {
+        // Randomly select color for the pipe segment
+        currentColor = pipeColors[Random.Range(0, pipeColors.Length)];
+        startPosition = startPosition + direction;
+
+        GameObject newPipe = Instantiate(pipePrefab, startPosition, rotation);
+        newPipe.GetComponent<Renderer>().material.color = currentColor;
     }
 }
