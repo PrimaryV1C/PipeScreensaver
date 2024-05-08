@@ -14,13 +14,18 @@ public class PipeSetter : MonoBehaviour
 
     private void Start()
     {
-        
+        StartCoroutine(GeneratePipesWithDelay(0.5f)); // Start generating pipes with a delay of 0.5 seconds
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator GeneratePipesWithDelay(float delay)
     {
-        
+        for (int i = 0; i < totalPipeSegments; i++)
+        {
+            GeneratePipe();
+            yield return new WaitForSeconds(delay); // Wait for the specified delay before generating the next pipe
+        }
+    }
+
     private void GeneratePipe()
     {
         // Randomly select color for the pipe segment
