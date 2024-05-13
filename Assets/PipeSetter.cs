@@ -97,6 +97,30 @@ private Vector3 GetValidDirection(LinkedList<Vector3> options)
     }
 
     Vector3 direction = node.Value;
+    Vector3 nextPosition = startPosition + direction;
+
+    Vector3 adjustedNextPosition = nextPosition + (direction * 0.75f); //Endpoint of the pipe
+    Vector3 curvedPosition = adjustedNextPosition + previousDirection; //Position taking curve into account
+
+    // Check if the entire bounds of the pipe prefab fit within the collider bounds
+    if (!spaceBounds.Contains(adjustedNextPosition))
+    {
+        // If the next position is outside the collider bounds, remove the direction from options
+        options.Remove(node);
+
+        return GetValidDirection(options); // Choose a different direction from the updated options
+    }
+    if(direction != previousDirection){
+
+        // If the pipe curves, it checks whether the curve will also fit the bounds
+        if(!spaceBounds.Contains(curvedPosition)){
+
+            // If the next position is outside the collider bounds, remove the direction from options
+            options.Remove(node);
+
+            return GetValidDirection(options); // Choose a different direction from the updated options
+        }
+    } else curvedPosition = Vector3.zero;
     return direction; // Return the chosen direction if it's valid
 }
 
