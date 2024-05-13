@@ -49,6 +49,33 @@ public class PipeSetter : MonoBehaviour
             newPipe = true;
             return;
             }
+
+        if(direction == previousDirection){ //Checks whether there is a curve or the pipe goes straight
+
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction); //Rotates the pipe towards the direction
+            
+            startPosition += direction; //Updates position
+            
+            GameObject newPipe = Instantiate(pipePrefab, startPosition, rotation); //Renders the pipe
+            newPipe.GetComponent<Renderer>().material.color = currentColor;
+        }
+        else{
+
+            startPosition += previousDirection; //When the pipe curves a curve sphere is created first
+            
+            Quaternion rotation = Quaternion.FromToRotation(Vector3.up, direction); //Rotates the pipe towards the direction
+            
+            GameObject newCurve = Instantiate(curvePrefab, startPosition, rotation); //Renders a new curve
+            newCurve.GetComponent<Renderer>().material.color = currentColor;
+
+            startPosition += direction; //Updates position
+
+            GameObject newPipe = Instantiate(pipePrefab, startPosition, rotation); //Renders the pipe
+            newPipe.GetComponent<Renderer>().material.color = currentColor;
+        }
+
+        previousDirection = direction;
+    }
 private void NewPipe(){
 
     iterationCap++;
