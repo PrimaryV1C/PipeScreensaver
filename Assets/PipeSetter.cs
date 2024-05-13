@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+
 
 public class PipeSetter : MonoBehaviour
 {
@@ -45,6 +47,11 @@ public class PipeSetter : MonoBehaviour
             NewPipe();
             iterationCap = 0; //Variable to cap the maximum recursion calls is reset
         }
+        
+        LinkedList<Vector3> options = new LinkedList<Vector3>(directions); //Create a new linked list from all direction options
+
+        Vector3 direction = GetValidDirection(options);
+
         if(direction ==  Vector3.zero){ //When no direction is returned a new pipe should be initialized
             newPipe = true;
             return;
@@ -76,6 +83,23 @@ public class PipeSetter : MonoBehaviour
 
         previousDirection = direction;
     }
+private Vector3 GetValidDirection(LinkedList<Vector3> options)
+{
+    // Checks if the pipe is in a dead end
+
+    int directionIndex = Random.Range(0, options.Count); // Randomly select a direction index from the predetermined list
+
+    // Node gets the direction at the random index
+    var node = options.First;
+    for (int i = 0; i < directionIndex; i++)
+    {
+        node = node.Next;
+    }
+
+    Vector3 direction = node.Value;
+    return direction; // Return the chosen direction if it's valid
+}
+
 private void NewPipe(){
 
     iterationCap++;
