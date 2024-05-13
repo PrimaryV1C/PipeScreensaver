@@ -4,13 +4,17 @@ using System.Collections;
 public class PipeSetter : MonoBehaviour
 {
     public GameObject pipePrefab;
+    public GameObject curvePrefab;
     public int totalPipeSegments;
     public Color[] pipeColors;
     private Color currentColor;
+    Vector3 startPosition = new Vector3(0, 3, 0);
     Vector3 direction = Vector3.up;
+    private Vector3[] directions = { Vector3.up, Vector3.down, Vector3.left, Vector3.right, Vector3.forward }; // Predetermined directions
     Quaternion rotation = Quaternion.identity;
     BoxCollider space;
     Bounds spaceBounds;
+    Vector3 previousDirection;
 
 
     private void Start()
@@ -19,6 +23,8 @@ public class PipeSetter : MonoBehaviour
         space = gameObject.GetComponent<BoxCollider>();
         spaceBounds = space.bounds;
 
+        //Start the coroutine with interval time of 0.2 seconds
+        StartCoroutine(GeneratePipesWithDelay(0.2f));
     }
 
     private IEnumerator GeneratePipesWithDelay(float delay)
