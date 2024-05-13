@@ -86,6 +86,11 @@ public class PipeSetter : MonoBehaviour
 private Vector3 GetValidDirection(LinkedList<Vector3> options)
 {
     // Checks if the pipe is in a dead end
+    if (options.Count == 0)
+    {
+        Debug.Log("No valid options");
+        return Vector3.zero;
+    }
 
     int directionIndex = Random.Range(0, options.Count); // Randomly select a direction index from the predetermined list
 
