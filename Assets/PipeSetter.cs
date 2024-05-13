@@ -9,9 +9,16 @@ public class PipeSetter : MonoBehaviour
     private Color currentColor;
     Vector3 direction = Vector3.up;
     Quaternion rotation = Quaternion.identity;
+    BoxCollider space;
+    Bounds spaceBounds;
 
 
     private void Start()
+    {   
+        //Get the Bounds of the Area
+        space = gameObject.GetComponent<BoxCollider>();
+        spaceBounds = space.bounds;
+
     }
 
     private IEnumerator GeneratePipesWithDelay(float delay)
