@@ -15,6 +15,8 @@ public class PipeSetter : MonoBehaviour
     BoxCollider space;
     Bounds spaceBounds;
     Vector3 previousDirection;
+    bool newPipe = true;
+    int iterationCap = 0;
 
 
     private void Start()
@@ -39,6 +41,14 @@ public class PipeSetter : MonoBehaviour
     private void GeneratePipe()
     {
 
+        if(newPipe){ //Checks whether to initialize a new pipe
+            NewPipe();
+            iterationCap = 0; //Variable to cap the maximum recursion calls is reset
+        }
+        if(direction ==  Vector3.zero){ //When no direction is returned a new pipe should be initialized
+            newPipe = true;
+            return;
+            }
 private void NewPipe(){
 
     iterationCap++;
