@@ -121,6 +121,36 @@ private Vector3 GetValidDirection(LinkedList<Vector3> options)
             return GetValidDirection(options); // Choose a different direction from the updated options
         }
     } else curvedPosition = Vector3.zero;
+
+    // Check if the next position would intersect with any existing pipe
+    Collider[] colliders = Physics.OverlapSphere(adjustedNextPosition, 1);
+
+    foreach (Collider col in colliders)
+    {
+        if (col.gameObject.CompareTag("Pipe"))
+        {
+            //Debug.Log("Pipe Collision");
+            // If collision detected with another pipe, choose a different direction
+            options.Remove(node);
+            return GetValidDirection(options);
+        }
+    }
+
+    if(curvedPosition != Vector3.zero){
+
+        colliders = Physics.OverlapSphere(curvedPosition, 0.5f);
+
+        foreach (Collider col in colliders)
+        {
+            if (col.gameObject.CompareTag("Pipe"))
+            {
+                //Debug.Log("Pipe Collision");
+                // If collision detected with another pipe, choose a different direction
+                options.Remove(node);
+                return GetValidDirection(options);
+            }
+        } 
+    }
     return direction; // Return the chosen direction if it's valid
 }
 
